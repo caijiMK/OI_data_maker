@@ -1,6 +1,8 @@
 #ifndef MKDATA
 #define MKDATA 1
 
+#include "chrono"
+#include "random"
 #include "cstdio"
 #include "string"
 #include "cstdlib"
@@ -9,6 +11,7 @@
 
 namespace mkdata
 {
+	mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
 	void mkstart(std::string _mkstart_name)
 	{
 		_mkstart_name+=".in";
@@ -21,16 +24,7 @@ namespace mkdata
 
 	long long random(long long _random_l,long long _random_r)
 	{
-		long long _random_len=_random_r-_random_l+1;
-		long long _random_len_len=0;
-		while(_random_len) _random_len_len++,_random_len/=10;
-		_random_len_len=_random_len_len/3+(_random_len_len%3?1:0);
-		long long _random_ans=0;
-		for(long long _random_i=1,_random_k=1;_random_i<=_random_len_len;
-			_random_i++,_random_k*=1000)
-			_random_ans+=rand()%1000*_random_k;
-		_random_ans%=(_random_r-_random_l+1);
-		return _random_l+_random_ans;
+		return gen()%(_random_r-_random_l+1)+_random_l;
 	}
 	//生成一个在[_random_l,_random_r]中的随机整数
 
@@ -39,7 +33,8 @@ namespace mkdata
 		for(;_list_l!=_list_r;_list_l++) *_list_l=random(_list_lnum,_list_rnum);
 		return ;
 	}
-	//生成随机序列。
+	//生成一个随机序列。
+	//其中元素的大小为[_list_l,_list_r]。
 
 	void mkend(std::string _mkend_name,int _mkend_number)
 	{
@@ -71,8 +66,6 @@ namespace mkdata
 		system(_mkend_commandout);
 		return ;
 	}
-	//生成一个随机序列。
-	//其中元素的大小为[_list_l,_list_r]。
 
 	void DAG(std::pair<int,int> *_DAG_edgel,std::pair<int,int> *_DAG_edger,int *_DAG_topol,int *_DAG_topor)
 	{
@@ -86,6 +79,7 @@ namespace mkdata
 		}
 		return ;
 	}
+	//生成一张DAG
 }
 
 #endif
