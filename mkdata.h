@@ -11,7 +11,7 @@
 
 namespace mkdata
 {
-	mt19937 gen(chrono::system_clock::now().time_since_epoch().count());
+	std::mt19937 gen(std::chrono::system_clock::now().time_since_epoch().count());
 	void mkstart(std::string _mkstart_name)
 	{
 		_mkstart_name+=".in";
